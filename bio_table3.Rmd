@@ -1,0 +1,73 @@
+---
+title: "Summary Report"
+author: " "
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+classoption: landscape
+header-includes:
+- \usepackage{booktabs}
+- \usepackage{caption}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+
+\begin{center}
+\textbf{Plot 1} 
+\end{center}
+
+```{r TableJiena, results = 'asis', fig.show='asis', fig.align="center", out.width = "860px", out.height= "390px" }
+    # generate bins based on input$bins from ui.R
+    x    <- faithful[, 2] 
+    bins <- seq(min(x), max(x), length.out = input$Answer1 + 1)
+    
+    # draw the histogram with the specified number of bins
+    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+```
+
+\begin{center}
+\textbf{Plot 2} 
+\end{center}
+
+
+```{r TableJiena2,  results = 'asis', fig.show='asis', fig.align="center", out.width = "860px", out.height= "390px"  }
+    # generate bins based on input$bins from ui.R
+    x    <- faithful[, 2] 
+    bins <- seq(min(x), max(x), length.out = input$Answer2 + 1)
+    
+    # draw the histogram with the specified number of bins
+    hist(x, breaks = bins, col = 'blue', border = 'white')
+```
+
+\pagebreak
+
+\begin{center}
+\textbf{Plot 3} 
+\end{center}
+
+```{r TableJiena3,  results = 'asis', fig.show='asis', fig.align="center", out.width = "860px", out.height= "390px"  }
+   # generate bins based on input$bins from ui.R
+    x    <- faithful[, 2] 
+    bins <- seq(min(x), max(x), length.out = input$Answer3 + 1)
+    
+    # draw the histogram with the specified number of bins
+    hist(x, breaks = bins, col = 'orange', border = 'white')
+```
+
+
+
+
+```{r Comment_monthly, echo=FALSE}
+library(knitr)  
+library(rmarkdown)
+rmarkdown:::find_pandoc()   
+f1 = tempfile()
+f2 = tempfile()
+writeLines(input$markdown_table3, f1)
+rmarkdown::pandoc_convert(f1, to = 'latex', from = 'markdown', output = f2)
+knitr::asis_output(readLines(f2, encoding = 'UTF-8'))
+```
+
