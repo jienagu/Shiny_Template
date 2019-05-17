@@ -16,7 +16,8 @@ library(shinyBS)
 library(rintrojs)
 library(shinymaterial)
 library(noteMD)
-navbarPage(  
+library(bsplus)
+navbarPage(
       title = div(
         div(
           id = "img-id",
@@ -25,7 +26,7 @@ navbarPage(
         "Shiny Template"
       ),
       selected = "panel1",id = "inTabset",
-      # CSS code for color 
+      # CSS code for color
       tags$head(tags$style(HTML('
                                 #img-id{
                                 position: absolute;
@@ -70,8 +71,12 @@ navbarPage(
                                 '))),
       theme = shinytheme("flatly"),
       introjsUI(),
-      tabPanel("Home",   value = "panel1",   img(src='image4.jpg',  width ="100%"),
-               includeMarkdown("www/about.md"), br(), 
+      tabPanel("Home",   value = "panel1",
+               # img(src='image4.jpg',  width ="100%"),
+               bs_carousel(id = "with_the_beatles") %>%
+                 bs_append(content = bs_carousel_image(src = "img/image4.jpg")) %>%
+                 bs_append(content = bs_carousel_image(src = "img/image7.jpg")),
+               includeMarkdown("www/about.md"), br(),
                # This is where you change the color of action button
                tags$head(tags$style(".launch2{background-color:#003366;} .launch2{color: white;}")),
                actionButton('launch','Launch', class="launch2"), br(), br(),
@@ -79,11 +84,13 @@ navbarPage(
                br(),
                img(src='image7.jpg',  width ="100%"),br(),br()
 
+
+
       ),
-      
-      tabPanel("Results", value = "panel2", 
+
+      tabPanel("Results", value = "panel2",
                fluidPage(
- 
+
                  br(),
                  introjsUI(),
                  fluidRow(
@@ -91,14 +98,14 @@ navbarPage(
                           tags$head(tags$style(".walk{background-color:#006699;} .walk{color: white;}")),
                           bsButton("help", label = "Walk me through the results!", block = F, class="walk"),br(),br(),
                           introBox( data.step = 1,
-                                    data.intro = "You can Re-enter questions, check your answers (inputs), download report in pdf (with your note), 
+                                    data.intro = "You can Re-enter questions, check your answers (inputs), download report in pdf (with your note),
                                     here!",
                                     actionButton('back_home','Re-enter questions', class="launch2"),
                                     actionButton('check_input','Check Answers', class="launch2"),
                                     downloadButton("download_table3", "Reports", class="launch2") )
                    )
-                   
-                 ) , 
+
+                 ) ,
 
                 box(solidHeader=TRUE, collapsible = TRUE,width=300,
                           title="Plot1",
@@ -118,7 +125,7 @@ navbarPage(
                                data.intro = "The third plot",
                      plotOutput("distPlot3") )
                  ),
- 
+
                  introBox( data.step = 5,
                            data.intro = "You can write down short notes here and your notes will print in the pdf report when you click download button.",
                            h4("Comments:"),
@@ -132,6 +139,6 @@ navbarPage(
       br(),br()
       ),
       br() )
-      
+
       )
-    
+
